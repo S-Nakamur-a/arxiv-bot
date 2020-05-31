@@ -17,12 +17,12 @@
 ```toml
 [[arxiv]]
 categories = ["cs.CV", "stat.ML"]  # 検索するカテゴリ required
+slack  = "XXXXXXXXXXXXXXXX"  # ポストするslackのwebhook URL required
+filter_by_main_category = true  # arxiv apiはサブカテゴリが一致するものも取得するが、上記で指定したカテゴリがメインカテゴリとして登録されているものだけにフィルタリングする required
 search_title_words = ["Face", "Facial", "face", "facial"]  # タイトルに含まれていてほしい文字 optional
 exclude_title_words = ["Surface"]  # タイトルには含まれてほしくない文字 optional
 search_abstract_words = ["face", "facial"]  # abstに含まれていてほしい文字 optional
 exclude_abstract_words = ["surface"]  # abstに含まれてほしくない文字 optional
-filter_by_main_category = true  # arxiv apiはサブカテゴリが一致するものも取得するが、上記で指定したカテゴリがメインカテゴリとして登録されているものだけにフィルタリングする required
-slack  = "XXXXXXXXXXXXXXXX"  # ポストするslackのwebhook URL required
 star_keywords = ["CVPR", "ICCV", "ECCV", "NIPS", "NeurIPS", "AAAI", "accept"]  # ハイライト対象のワード optional
 
 [[arxiv]]  # いくつでも設定可能
