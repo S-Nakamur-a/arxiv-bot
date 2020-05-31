@@ -28,7 +28,7 @@ star_keywords = ["CVPR", "ICCV", "ECCV", "NIPS", "NeurIPS", "AAAI", "accept"]  #
 [[arxiv]]  # いくつでも設定可能
 categories = ...
 ```
-上記例だと「cs.CVもしくはstat.MLの中で、タイトルにFace, Facial, face, facialが含まれていて、かつSurfaceは含まれておらず、かつアブストラクトにfaceもしくはfacialが含まれていて、かつsurfaceは含まれていない論文」を検索し、メインカテゴリがcs.CV, stat.MLのもののみを取得する
+上記例だと「cs.CVもしくはstat.MLの中で、タイトルにFace, Facial, face, facialのどれかが含まれていて、かつSurfaceは含まれておらず、かつアブストラクトにfaceもしくはfacialが含まれていて、かつsurfaceは含まれていない論文」を検索し、メインカテゴリがcs.CV, stat.MLのもののみを取得する
 
 その後、XXXXXXXXXXXXXXXXというwebhook urlをとおしてslackに送信する。ただし、CVPR, ICCV, ... という単語が論文のコメントにあれば:star:をつける
 
