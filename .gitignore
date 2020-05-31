@@ -1,0 +1,4 @@
+/target
+/database
+/frontend/node_modules
+setting.toml

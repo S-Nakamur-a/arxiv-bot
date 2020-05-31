@@ -1,0 +1,23 @@
+version: '3.7'
+services:
+  app:
+    build:
+      context: ./
+      args:
+        USER: "root"
+        CARGO_TARGET_DIR: /tmp/target
+    environment:
+      USER: root
+    volumes:
+      - ./:/app
+    tty:
+      true
+    command: >
+      bash -c "diesel migration run
+      && git checkout -- src/db/schema.rs
+      && touch src/main.rs
+      && cargo build --release
+      && cp /tmp/target/release/arxiv-bot ./arxiv-bot"
+
+
+
