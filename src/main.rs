@@ -9,6 +9,7 @@ extern crate structopt;
 extern crate serde;
 #[macro_use]
 extern crate serde_json;
+use std::{thread, time};
 
 use crate::usecase::arxiv_paper::ArxivPaperUseCaseTrait;
 
@@ -161,5 +162,6 @@ fn main() {
                 }
             }
         }
+        thread::sleep(time::Duration::from_millis(3000))  // for arxiv api limit
     }
 }
