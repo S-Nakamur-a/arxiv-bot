@@ -1,0 +1,14 @@
+[[arxiv]]
+categories = ["cs.CV"]
+slack  = ""
+star_keywords = ["accept", "appear", "CVPR", "ICCV", "ECCV", "SIGGRAPH", "ICML", "NIPS", "NeurIPS", "BMVC", "AAAI"]
+filter_by_main_category = true
+
+[[arxiv]]
+categories = ["cs.CV", "cs.AI", "eess.IV"]
+search_title_words = ["Super-Resolution", "Super Resolution", "super-resolution", "super resolution", "SISR", "image scaling", "upscale", "upscaling"]
+search_abstract_words = ["Super-Resolution", "Super Resolution", "super-resolution", "super resolution", "SISR", "image scaling", "upscale", "upscaling"]
+slack  = ""
+star_keywords = ["accept", "appear", "CVPR", "ICCV", "ECCV", "SIGGRAPH", "ICML", "NIPS", "NeurIPS", "BMVC", "AAAI"]
+filter_by_main_category = false
+
