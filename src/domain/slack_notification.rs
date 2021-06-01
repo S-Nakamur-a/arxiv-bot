@@ -1,4 +1,3 @@
-use failure::Error;
 use chrono::NaiveDateTime;
 use super::arxiv_paper::{Paper, PaperId};
 
@@ -18,8 +17,8 @@ pub struct NewSlackNotification {
 }
 
 pub trait SlackNotificationRepositoryTrait {
-    fn save(&self, notifications: &Vec<NewSlackNotification>) -> Result<usize, Error>;
-    fn find_not_send(&self, slack_url: &str) -> Result<Vec<Paper>, Error>;
-    fn mark_as_send(&self, slack_url: &str, paper_id: &PaperId) -> Result<usize, Error>;
-    fn delete(&self, slack_url: &str, paper_id: &PaperId) -> Result<(), Error>;
+    fn save(&self, notifications: &Vec<NewSlackNotification>) -> anyhow::Result<usize>;
+    fn find_not_send(&self, slack_url: &str) -> anyhow::Result<Vec<Paper>>;
+    fn mark_as_send(&self, slack_url: &str, paper_id: &PaperId) -> anyhow::Result<usize>;
+    fn delete(&self, slack_url: &str, paper_id: &PaperId) -> anyhow::Result<()>;
 }

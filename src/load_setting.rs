@@ -2,7 +2,6 @@ use toml;
 use serde::Deserialize;
 use std::fs::File;
 use std::io::Read;
-use failure::Error;
 
 
 #[derive(Deserialize, Debug)]
@@ -22,7 +21,7 @@ pub struct ArxivConfig {
     pub star_keywords: Option<Vec<String>>,
 }
 
-pub fn load_config(path: &str) -> Result<Config, Error> {
+pub fn load_config(path: &str) -> anyhow::Result<Config> {
     let mut config_toml = String::new();
 
     let mut file = match File::open(&path) {

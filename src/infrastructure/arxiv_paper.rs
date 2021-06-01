@@ -1,7 +1,6 @@
 #![allow(unused)]
 
 use diesel::prelude::*;
-use failure::Error;
 use chrono::NaiveDateTime;
 use std::path::Iter;
 use std::collections::{HashSet, HashMap};
@@ -57,9 +56,9 @@ impl ArxivPaperRepository {
 }
 
 impl I::ArxivPaperRepositoryTrait for ArxivPaperRepository {
-    fn find_by_id(&self, id: I::PaperId) -> Result<Option<I::Paper>, Error> {
+    fn find_by_id(&self, id: I::PaperId) -> anyhow::Result<Option<I::Paper>> {
         let conn = SQLite::create().connect();
-        let paper = conn.transaction::<Option<I::Paper>, Error, _>(|| {
+        let paper = conn.transaction::<Option<I::Paper>, _, _>(|| {
             // joinすれば一発だが、[(paper1, author1), (paper1, author2), (paper1, author3)]となり
             // 後処理が複雑化するのと、関数化しづらくなるため敢えて分割している
             let paper_with_category: (Paper, Category) = papers::table
@@ -92,7 +91,7 @@ impl I::ArxivPaperRepositoryTrait for ArxivPaperRepository {
         });
         paper
     }
-    fn find_by_urls(&self, urls: &Vec<String>) -> Result<Vec<I::Paper>, Error> {
+    fn find_by_urls(&self, urls: &Vec<String>) -> anyhow::Result<Vec<I::Paper>> {
         let conn = SQLite::create().connect();
         let load_papers: Vec<(Paper, Category)> = papers::table
             .inner_join(categories::table)
@@ -117,9 +116,9 @@ impl I::ArxivPaperRepositoryTrait for ArxivPaperRepository {
         }).collect())
     }
 
-    fn save(&self, papers: &Vec<I::NewPaper>) -> Result<usize, Error> {
+    fn save(&self, papers: &Vec<I::NewPaper>) -> anyhow::Result<usize> {
         let conn = SQLite::create().connect();
-        let res = conn.transaction::<_, Error, _>(|| {
+        let res = conn.transaction::<_, _, _>(|| {
             // Insert authors
             let new_authors = new_authors(&papers);
             // 未知のauthorのみinsert

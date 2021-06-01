@@ -1,5 +1,4 @@
 use diesel::prelude::*;
-use failure::Error;
 use chrono::NaiveDateTime;
 
 use super::sqlite::SQLite;
@@ -26,7 +25,7 @@ impl SlackNotificationRepository {
 }
 
 impl I::SlackNotificationRepositoryTrait for SlackNotificationRepository {
-    fn save(&self, notifications: &Vec<I::NewSlackNotification>) -> Result<usize, Error> {
+    fn save(&self, notifications: &Vec<I::NewSlackNotification>) -> anyhow::Result<usize> {
         let new_notifications = notifications.iter().map(|n| NewSlackNotification {
             paper_id: n.paper_id.0,
             slack_url: n.slack_url.clone(),
@@ -39,7 +38,7 @@ impl I::SlackNotificationRepositoryTrait for SlackNotificationRepository {
         Ok(n)
     }
 
-    fn find_not_send(&self, slack_url: &str) -> Result<Vec<J::Paper>, Error> {
+    fn find_not_send(&self, slack_url: &str) -> anyhow::Result<Vec<J::Paper>> {
         let conn = SQLite::create().connect();
         let notifications: Vec<(SlackNotification, Paper, Category)> = slack_notifications::table
             .inner_join(papers::table
@@ -66,7 +65,7 @@ impl I::SlackNotificationRepositoryTrait for SlackNotificationRepository {
         }).collect())
     }
 
-    fn mark_as_send(&self, slack_url: &str, paper_id: &J::PaperId) -> Result<usize, Error> {
+    fn mark_as_send(&self, slack_url: &str, paper_id: &J::PaperId) -> anyhow::Result<usize> {
         let conn = SQLite::create().connect();
         let target = slack_notifications::table
             .filter(
@@ -78,7 +77,7 @@ impl I::SlackNotificationRepositoryTrait for SlackNotificationRepository {
         Ok(n_update)
     }
 
-    fn delete(&self, slack_url: &str, paper_id: &J::PaperId) -> Result<(), Error> {
+    fn delete(&self, slack_url: &str, paper_id: &J::PaperId) -> anyhow::Result<()> {
         let conn = SQLite::create().connect();
         let target = slack_notifications::table
             .filter(slack_notifications::paper_id.eq(&paper_id.0)

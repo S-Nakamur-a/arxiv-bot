@@ -1,9 +1,7 @@
-use failure::Error;
-
 use crate::domain::arxiv_api::{Paper as ApiPaper, ArxivAPITrait};
 
 pub trait ArxivAPIUseCaseTrait {
-    fn query(&self) -> Result<Vec<ApiPaper>, Error>;
+    fn query(&self) -> anyhow::Result<Vec<ApiPaper>>;
 }
 
 #[derive(Clone)]
@@ -26,7 +24,7 @@ impl<A> ArxivAPIUseCase<A>
 impl<A> ArxivAPIUseCaseTrait for ArxivAPIUseCase<A>
     where A: ArxivAPITrait
 {
-    fn query(&self) -> Result<Vec<ApiPaper>, Error> {
+    fn query(&self) -> anyhow::Result<Vec<ApiPaper>> {
         let new_papers = self.arxiv_api.query()?;
         Ok(new_papers)
     }

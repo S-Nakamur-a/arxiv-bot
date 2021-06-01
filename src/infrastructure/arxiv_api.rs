@@ -1,6 +1,5 @@
 use crate::domain::arxiv_api as I;
 use chrono::NaiveDateTime;
-use failure::Error;
 use percent_encoding::{utf8_percent_encode, AsciiSet, NON_ALPHANUMERIC};
 use quick_xml;
 use quick_xml::de::from_str;
@@ -199,11 +198,11 @@ impl ArxivAPI {
         return url.to_owned() + &params;
     }
 
-    fn fetch_xml(&self) -> reqwest::Result<String> {
+    fn fetch_xml(&self) -> anyhow::Result<String> {
         let api_url = self.generate_api_url();
         println!("{}", api_url);
-        let body = reqwest::blocking::get(&api_url)?.text();
-        body
+        let body = reqwest::blocking::get(&api_url)?.text()?;
+        Ok(body)
     }
 
     fn convert(&self, feed: &Feed) -> Vec<I::Paper> {
@@ -245,7 +244,7 @@ impl ArxivAPI {
         papers
     }
 
-    fn to_papers(&self, xml: String) -> Result<Vec<I::Paper>, Error> {
+    fn to_papers(&self, xml: String) -> anyhow::Result<Vec<I::Paper>> {
         let re = Regex::new("<link title=\"doi\".*>\n")?;
         let xml = re.replace_all(&xml, "");
         let feed: Feed = from_str(&xml)?;
@@ -254,7 +253,7 @@ impl ArxivAPI {
 }
 
 impl I::ArxivAPITrait for ArxivAPI {
-    fn query(&self) -> Result<Vec<I::Paper>, Error> {
+    fn query(&self) -> anyhow::Result<Vec<I::Paper>> {
         let xml = self.fetch_xml()?;
         let mut papers = self.to_papers(xml)?;
         if self.filter_by_main_category {

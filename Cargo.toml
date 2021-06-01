@@ -1,7 +1,7 @@
 [package]
 name = "arxiv-bot"
 version = "0.1.0"
-authors = ["Nkriskeeic <kreski.linux.sea@gmail.com>"]
+authors = ["S-Nakamur-a <25317025+S-Nakamur-a@users.noreply.github.com>"]
 edition = "2018"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
@@ -10,7 +10,6 @@ edition = "2018"
 diesel = { version = "^1.4.4", default-features = false, features = ["sqlite",  "chrono", "serde_json"] }
 chrono = "^0.4.11"
 reqwest = { version="^0.10.4", features=["blocking", "json"]}
-failure = "^0.1.7"
 dotenv = "^0.15.0"
 serde = {version = "^1.0.106", features=["derive"]}
 serde_json = "1.0"
@@ -20,6 +19,7 @@ regex = "^1.3.7"
 structopt = "^0.3.14"
 percent-encoding = "^2.1.0"
 toml = "^0.5.6"
+anyhow = "1.0.40"
 
 [dev-dependencies]
 diesel_migrations = "1.1.0"

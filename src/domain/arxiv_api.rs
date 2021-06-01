@@ -1,4 +1,3 @@
-use failure::Error;
 use chrono::NaiveDateTime;
 
 #[derive(Debug, Clone)]
@@ -16,5 +15,5 @@ pub struct Paper {
 }
 
 pub trait ArxivAPITrait {
-    fn query(&self) -> Result<Vec<Paper>, Error>;
+    fn query(&self) -> anyhow::Result<Vec<Paper>>;
 }

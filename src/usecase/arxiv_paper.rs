@@ -1,11 +1,9 @@
-use failure::Error;
-
 use crate::domain::arxiv_paper::{Paper, PaperId, NewPaper, ArxivPaperRepositoryTrait};
 
 pub trait ArxivPaperUseCaseTrait {
-    fn find_by_id(&self, id: PaperId) -> Result<Option<Paper>, Error>;
-    fn find_by_urls(&self, urls: &Vec<String>) -> Result<Vec<Paper>, Error>;
-    fn save(&self, papers: &Vec<NewPaper>) -> Result<usize, Error>;
+    fn find_by_id(&self, id: PaperId) -> anyhow::Result<Option<Paper>>;
+    fn find_by_urls(&self, urls: &Vec<String>) -> anyhow::Result<Vec<Paper>>;
+    fn save(&self, papers: &Vec<NewPaper>) -> anyhow::Result<usize>;
 }
 
 #[derive(Clone)]
@@ -28,13 +26,13 @@ impl<A> ArxivPaperUseCase<A>
 impl<A> ArxivPaperUseCaseTrait for ArxivPaperUseCase<A>
     where A: ArxivPaperRepositoryTrait
 {
-    fn find_by_id(&self, id: PaperId) -> Result<Option<Paper>, Error> {
+    fn find_by_id(&self, id: PaperId) -> anyhow::Result<Option<Paper>> {
         self.arxiv_paper_repository.find_by_id(id)
     }
-    fn find_by_urls(&self, urls: &Vec<String>) -> Result<Vec<Paper>, Error> {
+    fn find_by_urls(&self, urls: &Vec<String>) -> anyhow::Result<Vec<Paper>> {
         self.arxiv_paper_repository.find_by_urls(urls)
     }
-    fn save(&self, papers: &Vec<NewPaper>) -> Result<usize, Error> {
+    fn save(&self, papers: &Vec<NewPaper>) -> anyhow::Result<usize> {
         self.arxiv_paper_repository.save(papers)
     }
 }

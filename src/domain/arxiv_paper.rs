@@ -1,4 +1,3 @@
-use failure::Error;
 use super::arxiv_api as API;
 use std::convert::From;
 use chrono::NaiveDateTime;
@@ -77,8 +76,8 @@ impl From<API::Paper> for NewPaper {
 }
 
 pub trait ArxivPaperRepositoryTrait {
-    fn find_by_id(&self, id: PaperId) -> Result<Option<Paper>, Error>;
-    fn find_by_urls(&self, urls: &Vec<String>) -> Result<Vec<Paper>, Error>;
-    fn save(&self, papers: &Vec<NewPaper>) -> Result<usize, Error>;
+    fn find_by_id(&self, id: PaperId) -> anyhow::Result<Option<Paper>>;
+    fn find_by_urls(&self, urls: &Vec<String>) -> anyhow::Result<Vec<Paper>>;
+    fn save(&self, papers: &Vec<NewPaper>) -> anyhow::Result<usize>;
     fn download(&self, papers: &Vec<Paper>) -> bool;
 }
