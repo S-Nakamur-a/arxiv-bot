@@ -1,4 +1,4 @@
-FROM rust:1.41
+FROM rust:1.51
 
 RUN apt-get update -y && apt-get upgrade -y
 RUN cargo install diesel_cli --no-default-features --features sqlite
