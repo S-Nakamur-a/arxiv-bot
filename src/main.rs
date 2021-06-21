@@ -71,7 +71,9 @@ arg_enum! {
 
 fn main() {
     dotenv::dotenv().ok();
-    let config = load_config("setting.toml").unwrap();
+    const FILE: &'static str = concat!(env!("CARGO_MANIFEST_DIR"), "/", "setting.toml");
+
+    let config = load_config(FILE).unwrap();
 
     let opt: Opt = Opt::from_args();
 
