@@ -11,7 +11,6 @@
 1. 下記に従い`setting.toml`を編集する
 1. 下記に従いコードを実行する
 
-
 ## setting.tomlの編集
 
 ```toml
